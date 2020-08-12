@@ -33,8 +33,9 @@ class Start extends React.Component {
     this.setState({ birth, process: "hearing" });
   };
 
-  handleHearClick = (value) => {
-    this.setState({ value });
+  handleHearClick = async (value) => {
+    await this.setState({ value });
+    this.props.handleNext();
   };
 
   renderProcess = () => {
