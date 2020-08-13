@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Button, Slider, Typography } from "@material-ui/core";
 
-class Hearing extends React.Component {
+class PostTestQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,21 +20,28 @@ class Hearing extends React.Component {
             marginTop: "20%",
           }}
         >
-          <h1>I am concerned about my hearing</h1>
+          <h2>
+            I’m going to discuss my results on the hearing test with a
+            healthcare professional
+          </h2>
           <br />
-
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={this.state.value}
-            onChange={(value) =>
-              this.setState({ value: value.target.ariaValueNow })
-            }
-            style={{ width: "40%" }}
-            marks
-            min={0}
-            max={100}
-          />
-
+          <div className="row">
+            <h5 style={{ marginLeft: "14%", marginRight: 10 }}>
+              Strongly disagree
+            </h5>
+            <Slider
+              valueLabelDisplay="auto"
+              defaultValue={this.state.value}
+              onChange={(value) =>
+                this.setState({ value: value.target.ariaValueNow })
+              }
+              style={{ width: "40%" }}
+              marks
+              min={0}
+              max={100}
+            />
+            <h5 style={{ marginLeft: 10 }}>Strongly agree</h5>
+          </div>
           <br />
           <Button
             color="primary"
@@ -55,4 +62,4 @@ class Hearing extends React.Component {
   }
 }
 
-export default Hearing;
+export default PostTestQuestions;

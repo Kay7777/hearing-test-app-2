@@ -19,8 +19,8 @@ class Id extends React.Component {
             marginTop: "20%",
           }}
         >
-          <h1>Please enter the Study ID # you see at the top of the screen</h1>
-          <h1>Once you have entered the number, please click "Submit"</h1>
+          <h2>Please enter the Study ID # you see at the top of the screen</h2>
+          <h3>Once you have entered the number, please click "Submit"</h3>
           <TextField
             value={this.state.id}
             onChange={(e) => this.setState({ id: e.target.value })}

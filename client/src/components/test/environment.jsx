@@ -11,10 +11,10 @@ export default (props) => {
           marginTop: "20%",
         }}
       >
-        <h1 className="font-weight-light">
+        <h2>
           Make sure you're in a quiet place where you can complete the test
           without distraction!
-        </h1>
+        </h2>
         <Button
           color="primary"
           variant="contained"

@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  Input,
-  Container,
-  CircularProgress,
-  Fab,
-  Button,
-} from "@material-ui/core";
+import { Input, Container, Fab } from "@material-ui/core";
+import CountDown from "../../assets/count-down";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 
-class Survey extends React.Component {
+class SpeechInNoise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,33 +16,35 @@ class Survey extends React.Component {
       input2: "",
       input3: "",
       step: 1,
-      disabled: true,
       loading: true,
       time: 0,
       timer: [],
       dbs: [0],
+      countDown: 3,
     };
     this.input1 = React.createRef();
     this.input2 = React.createRef();
     this.input3 = React.createRef();
-    this.numOfQues = 10;
+    this.numOfQues = 5;
   }
 
   componentDidMount = async () => {
-    // preload audios
-    const noise = new Audio(process.env.PUBLIC_URL + "/audios/noise.wav");
-    await noise.play();
-    await noise.pause();
-    for (let i = 1; i < 10; i++) {
-      const audio = new Audio(process.env.PUBLIC_URL + "/audios/" + i + ".wav");
-      audio.volume = 0;
-      await audio.play();
-    }
-    // real testig starts
-    console.log("Finish preload audios");
-    this.setState({ loading: false });
-    await this._focus();
-    this.handlePlay();
+    // preload audios has been done in the test-demo component
+
+    /* const noise = new Audio(process.env.PUBLIC_URL + "/audios/noise.wav");
+    // await noise.play();
+    // await noise.pause();
+    // for (let i = 1; i < 10; i++) {
+    //   const audio = new Audio(process.env.PUBLIC_URL + "/audios/" + i + ".wav");
+    //   audio.volume = 0;
+    //   await audio.play();
+    */
+
+    setTimeout(async () => {
+      await this.setState({ loading: false });
+      await this._focus();
+      this.handlePlay();
+    }, 3000);
   };
 
   componentDidUpdate = () => {
@@ -91,7 +88,6 @@ class Survey extends React.Component {
     const { audioVolume, noiseVolume, timer, noise } = this.state;
     console.log("Signal Volume: " + audioVolume);
     console.log("Noise Volume: " + noiseVolume);
-    await this.setState({ disabled: true });
     if (this.state.time !== 0) {
       this.stopTimer();
       timer.push(Number(this.state.time).toFixed(2));
@@ -131,7 +127,6 @@ class Survey extends React.Component {
     }, 2900);
     setTimeout(() => {
       noise.pause();
-      this.setState({ disabled: false });
       this.startTimer();
     }, 4100);
   };
@@ -161,6 +156,7 @@ class Survey extends React.Component {
         input2: "",
         input3: "",
         step: step + 1,
+        focus: 0,
       });
       this.handlePlay();
     } else {
@@ -176,7 +172,7 @@ class Survey extends React.Component {
       const SNR = Number(sum / 5).toFixed(2);
       console.log("SNR is " + SNR);
       // return SNR and Timer
-      this.props.handleFinish(SNR, timer);
+      this.props.handleClick(SNR, timer);
     }
   };
 
@@ -214,28 +210,55 @@ class Survey extends React.Component {
     }
   };
 
-  changeAnswer = async (value) => {
+  changeAnswer = (value) => {
     const { focus } = this.state;
     switch (focus) {
       case 0:
-        return await this.setState({ input1: value, focus: 1 });
+        if (value.length !== 1) {
+          return this.setState({ input1: value });
+        } else {
+          return this.setState({ input1: value, focus: 1 });
+        }
       case 1:
-        return await this.setState({ input2: value, focus: 2 });
+        if (value.length !== 1) {
+          return this.setState({ input2: value });
+        } else {
+          return this.setState({ input2: value, focus: 2 });
+        }
       case 2:
-        await this.setState({ input3: value, focus: 0 });
-        return this.checkAnswer();
+        return this.setState({ input3: value });
+      default:
+        return null;
+    }
+  };
+
+  handleDelete = () => {
+    const { focus, input2, input3 } = this.state;
+    switch (focus) {
+      case 0:
+        return this.setState({ input1: "" });
+      case 1:
+        if (input2.length === 1) {
+          return this.setState({ input2: "" });
+        }
+        return this.setState({ input2: "", focus: 0 });
+      case 2:
+        if (input3.length === 1) {
+          return this.setState({ input3: "" });
+        }
+        return this.setState({ input3: "", focus: 1 });
       default:
         return null;
     }
   };
 
   renderInputs = () => {
-    const { focus, input1, input2, input3, disabled, loading } = this.state;
+    const { input1, input2, input3 } = this.state;
     return (
       <div>
         <Input
           value={input1}
-          disabled={disabled || focus !== 0}
+          onClick={() => this.setState({ focus: 0 })}
           inputRef={(input) => {
             this.input1 = input;
           }}
@@ -248,7 +271,7 @@ class Survey extends React.Component {
         />
         <Input
           value={input2}
-          disabled={disabled || focus !== 1}
+          onClick={() => this.setState({ focus: 1 })}
           inputRef={(input) => {
             this.input2 = input;
           }}
@@ -261,7 +284,7 @@ class Survey extends React.Component {
         />
         <Input
           value={input3}
-          disabled={disabled || focus !== 2}
+          onClick={() => this.setState({ focus: 2 })}
           inputRef={(input) => {
             this.input3 = input;
           }}
@@ -272,12 +295,6 @@ class Survey extends React.Component {
           onChange={(e) => this.changeAnswer(e.target.value)}
           style={{ width: 30, marginLeft: 30 }}
         />
-        {loading ? (
-          <div>
-            <CircularProgress />
-            <h2> Loading ... </h2>
-          </div>
-        ) : null}
       </div>
     );
   };
@@ -286,31 +303,46 @@ class Survey extends React.Component {
     return (
       <div>
         <div className="rows">
-          <Fab color="default" style={{ marginLeft: 10, marginRight: 10 }}>
+          <Fab
+            color="default"
+            onClick={() => this.changeAnswer("1")}
+            style={{ marginLeft: 10, marginRight: 10 }}
+          >
             1
           </Fab>
-          <Fab color="default" style={{ marginLeft: 10, marginRight: 10 }}>
+          <Fab
+            color="default"
+            onClick={() => this.changeAnswer("2")}
+            style={{ marginLeft: 10, marginRight: 10 }}
+          >
             2
           </Fab>
-          <Fab color="default" style={{ marginLeft: 10, marginRight: 10 }}>
+          <Fab
+            color="default"
+            onClick={() => this.changeAnswer("3")}
+            style={{ marginLeft: 10, marginRight: 10 }}
+          >
             3
           </Fab>
         </div>
         <div className="rows">
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("4")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             4
           </Fab>
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("5")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             5
           </Fab>
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("6")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             6
@@ -319,18 +351,21 @@ class Survey extends React.Component {
         <div className="rows">
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("7")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             7
           </Fab>
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("8")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             8
           </Fab>
           <Fab
             color="default"
+            onClick={() => this.changeAnswer("9")}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             9
@@ -339,6 +374,7 @@ class Survey extends React.Component {
         <div className="rows">
           <Fab
             color="default"
+            onClick={this.handleDelete}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             <BackspaceIcon />
@@ -351,6 +387,7 @@ class Survey extends React.Component {
           </Fab>
           <Fab
             color="default"
+            onClick={this.checkAnswer}
             style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
           >
             OK
@@ -361,7 +398,7 @@ class Survey extends React.Component {
   };
 
   render() {
-    const { step } = this.state;
+    const { step, loading, countDown } = this.state;
     return (
       <Container style={{ textAlign: "center" }}>
         <div
@@ -371,32 +408,25 @@ class Survey extends React.Component {
             marginTop: "20%",
           }}
         >
-          <h1 className="font-weight-light">
-            Enter the three digits you heard. If you’re not sure, that’s fine.
-            Just guess.
-          </h1>
-          {this.renderInputs()}
-          <h2 className="font-weight-lighter" style={{ marginTop: 10 }}>
-            Step {step} of {this.numOfQues}
-          </h2>
-          {this.renderKeys()}
-          <Button
-            color="primary"
-            variant="contained"
-            size="large"
-            // onClick={props.handleClick}
-            style={{
-              backgroundColor: "black",
-              width: 150,
-              marginTop: 20,
-            }}
-          >
-            Next
-          </Button>
+          {loading ? (
+            <CountDown />
+          ) : (
+            <div>
+              <h1 className="font-weight-light">
+                Enter the three digits you heard. If you’re not sure, that’s
+                fine. Just guess.
+              </h1>
+              {this.renderInputs()}
+              <h2 className="font-weight-lighter" style={{ marginTop: 10 }}>
+                Step {step} of {this.numOfQues}
+              </h2>
+              {this.renderKeys()}
+            </div>
+          )}
         </div>
       </Container>
     );
   }
 }
 
-export default Survey;
+export default SpeechInNoise;

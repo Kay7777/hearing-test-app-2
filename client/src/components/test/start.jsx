@@ -11,7 +11,7 @@ export default (props) => {
           marginTop: "20%",
         }}
       >
-        <h1>Click the ‘START’ button to begin the hearing test</h1>
+        <h2>Click the ‘START’ button to begin the hearing test</h2>
         <Button
           color="primary"
           variant="contained"

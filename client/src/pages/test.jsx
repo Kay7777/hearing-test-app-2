@@ -3,10 +3,8 @@ import Start from "../components/test/start";
 import Id from "../components/test/id";
 import VolumeAdjustment from "../components/test/adjustment";
 import SpeechInNoise from "../components/test/speech-in-noise";
+import TestDemo from "../components/test/test-demo";
 import Environment from "../components/test/environment";
-import Submit from "../components/test/submit";
-import Result from "../components/test/result";
-import Final from "../components/test/final";
 import axios from "axios";
 
 class Test extends React.Component {
@@ -17,7 +15,6 @@ class Test extends React.Component {
       version: 1, // need to do 3 version here
       volume: 10, // starts at 10/1000
       SNR: null,
-      timer: [],
       result: ["pass", "fail"][Math.floor(Math.random() * 2)],
       round: 1, // initial round is 1
       id: null,
@@ -33,36 +30,16 @@ class Test extends React.Component {
         round: 2,
         volume: doc.data.volume,
         searchDone: true,
-        process: "testing",
+        process: "demo",
       });
     } else {
       return null;
     }
   };
 
-  saveData = async () => {
-    console.log("Data saved from frontend", this.state);
-    const { SNR, result, timer, round, volume, version, id } = this.state;
-    if (round === 1) {
-      await axios.post("/api/data", {
-        id,
-        version,
-        SNR1: SNR,
-        result,
-        volume,
-        timer1: timer,
-        round,
-      });
-      this.setState({ process: "result" });
-    } else {
-      await axios.post("/api/data", {
-        id,
-        SNR2: SNR,
-        timer2: timer,
-        round,
-      });
-      this.setState({ process: "final" });
-    }
+  handleTestingClick = (SNR, timer) => {
+    const { id, version, volume, round, result } = this.state;
+    this.props.handleNext(id, version, volume, round, result, SNR, timer);
   };
 
   renderProcess = () => {
@@ -82,6 +59,13 @@ class Test extends React.Component {
         return (
           <VolumeAdjustment
             handleVolume={(volume) => this.setState({ volume })}
+            handleClick={() => this.setState({ process: "demo" })}
+          />
+        );
+      case "demo":
+        return (
+          <TestDemo
+            volume={volume}
             handleClick={() => this.setState({ process: "testing" })}
           />
         );
@@ -89,17 +73,10 @@ class Test extends React.Component {
         return (
           <SpeechInNoise
             volume={volume}
-            handleFinish={(SNR, timer) =>
-              this.setState({ process: "submit", SNR, timer })
-            }
+            handleClick={this.handleTestingClick}
           />
         );
-      case "submit":
-        return <Submit handleClick={this.saveData} round={round} />;
-      case "result":
-        return <Result result={result} />;
-      case "final":
-        return <Final />;
+
       default:
         return <process />;
     }
