@@ -15,71 +15,76 @@ class ResultVideo extends React.Component {
   render() {
     return (
       <Container style={{ textAlign: "center" }}>
-        <div
-          style={{
-            textAlign: "center",
-            position: "relative",
-            marginTop: "20%",
-          }}
-        >
-          {!this.state.showResult ? (
-            <div>
-              <h1>
-                You have completed the tests. Click the button below to get your
-                results.
-              </h1>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          {!this.state.showResult ? 8 : 9}
+        </h2>
+        {!this.state.showResult ? (
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+              marginTop: "15%",
+            }}
+          >
+            <h2>
+              You have completed the tests. Click the button below to get your
+              results.
+            </h2>
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              onClick={() => this.setState({ showResult: true })}
+              style={{
+                backgroundColor: "black",
+                width: 150,
+                marginTop: 10,
+              }}
+            >
+              Get Results
+            </Button>
+          </div>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+              marginTop: "2%",
+            }}
+          >
+            <h3>
+              Your test performance indicates that you may have{" "}
+              <span className="text-danger">hearing loss</span>. Please view the
+              short clip below for more information on what this means.
+            </h3>
+            <br />
+            <iframe
+              width="1566"
+              height="758"
+              src="https://www.youtube.com/embed/NpEaa2P7qZI"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style={{ width: "80%", height: 300 }}
+            ></iframe>
+            <br />
+            {this.state.showButton ? (
               <Button
                 color="primary"
                 variant="contained"
                 size="large"
-                onClick={() => this.setState({ showResult: true })}
+                onClick={this.props.handleClick}
                 style={{
                   backgroundColor: "black",
-                  width: 200,
-                  height: 70,
-                  marginTop: 30,
+                  width: 150,
+                  marginTop: 10,
                 }}
               >
-                Get Results
+                Next
               </Button>
-            </div>
-          ) : (
-            <div>
-              <h2>
-                Your test performance indicates that you may have hearing loss.
-                Please view the short clip below for more information on what
-                this means.
-              </h2>
-              <br />
-              <iframe
-                width="1566"
-                height="758"
-                src="https://www.youtube.com/embed/NpEaa2P7qZI"
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                style={{ width: "80%", height: 300 }}
-              ></iframe>
-              <br />
-              {this.state.showButton ? (
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  onClick={this.props.handleClick}
-                  style={{
-                    backgroundColor: "black",
-                    width: 150,
-                    height: 70,
-                    marginTop: 30,
-                  }}
-                >
-                  Next
-                </Button>
-              ) : null}
-            </div>
-          )}
-        </div>
+            ) : null}
+          </div>
+        )}
       </Container>
     );
   }

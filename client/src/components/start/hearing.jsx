@@ -13,24 +13,29 @@ class Hearing extends React.Component {
     console.log("value is ", this.state.value);
     return (
       <Container>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          3
+        </h2>
         <div
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "15%",
           }}
         >
           <h1>I am concerned about my hearing</h1>
           <br />
 
           <Slider
-            valueLabelDisplay="auto"
-            defaultValue={this.state.value}
-            onChange={(value) =>
-              this.setState({ value: value.target.ariaValueNow })
-            }
+            valueLabelDisplay="on"
+            defaultValue={50}
+            aria-labelledby="discrete-slider-always"
+            onChange={(e) => {
+              e.target.addEventListener("click", (v) => {
+                this.setState({ value: v.target.innerText });
+              });
+            }}
             style={{ width: "40%" }}
-            marks
             min={0}
             max={100}
           />
@@ -42,12 +47,12 @@ class Hearing extends React.Component {
             size="large"
             onClick={() => this.props.handleClick(this.state.value)}
             style={{
-              backgroundColor: this.state.value === null ? "gray" : "black",
+              backgroundColor: "black",
               width: 200,
             }}
             disabled={this.state.value === null}
           >
-            {this.state.value ? `${this.state.value} OK?` : "re-select"}
+            OK
           </Button>
         </div>
       </Container>

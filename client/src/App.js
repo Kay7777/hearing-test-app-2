@@ -11,8 +11,6 @@ class App extends React.Component {
       id: null,
       version: null,
       volume: null,
-      round: null,
-      result: null,
       SNR: null,
       timer: null,
     };
@@ -22,30 +20,19 @@ class App extends React.Component {
     this.setState({ process: "test" });
   };
 
-  handleTestNext = (id, version, volume, round, result, SNR, timer) => {
+  handleTestNext = (id, version, volume, SNR, timer) => {
     this.setState({
       process: "post-test",
       id,
       version,
       volume,
-      round,
-      result,
       SNR,
       timer,
     });
   };
 
   renderProcess = () => {
-    const {
-      process,
-      id,
-      version,
-      volume,
-      round,
-      result,
-      SNR,
-      timer,
-    } = this.state;
+    const { process, id, version, volume, SNR, timer } = this.state;
     switch (process) {
       case "start":
         return <Start handleNext={this.handleStartNext} />;
@@ -57,8 +44,6 @@ class App extends React.Component {
             id={id}
             version={version}
             volume={volume}
-            round={round}
-            result={result}
             SNR={SNR}
             timer={timer}
           />

@@ -1,14 +1,14 @@
 import React from "react";
-import { Container, Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 
-export default (props) => {
+export default () => {
   return (
     <Container>
       <div
         style={{
           textAlign: "center",
           position: "relative",
-          marginTop: "20%",
+          marginTop: "24%",
         }}
       >
         <h1>Welcome</h1>

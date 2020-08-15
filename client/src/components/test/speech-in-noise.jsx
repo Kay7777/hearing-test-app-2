@@ -267,7 +267,7 @@ class SpeechInNoise extends React.Component {
           }}
           required={true}
           onChange={(e) => this.changeAnswer(e.target.value)}
-          style={{ width: 30, marginRight: 30 }}
+          style={{ width: 40, marginRight: 10, paddingLeft: 13 }}
         />
         <Input
           value={input2}
@@ -280,7 +280,7 @@ class SpeechInNoise extends React.Component {
           }}
           required={true}
           onChange={(e) => this.changeAnswer(e.target.value)}
-          style={{ width: 30 }}
+          style={{ width: 40, paddingLeft: 13 }}
         />
         <Input
           value={input3}
@@ -293,7 +293,7 @@ class SpeechInNoise extends React.Component {
           }}
           required={true}
           onChange={(e) => this.changeAnswer(e.target.value)}
-          style={{ width: 30, marginLeft: 30 }}
+          style={{ width: 40, marginLeft: 10, paddingLeft: 13 }}
         />
       </div>
     );
@@ -306,21 +306,21 @@ class SpeechInNoise extends React.Component {
           <Fab
             color="default"
             onClick={() => this.changeAnswer("1")}
-            style={{ marginLeft: 10, marginRight: 10 }}
+            style={{ marginLeft: 6, marginRight: 6 }}
           >
             1
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("2")}
-            style={{ marginLeft: 10, marginRight: 10 }}
+            style={{ marginLeft: 6, marginRight: 6 }}
           >
             2
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("3")}
-            style={{ marginLeft: 10, marginRight: 10 }}
+            style={{ marginLeft: 6, marginRight: 6 }}
           >
             3
           </Fab>
@@ -329,21 +329,21 @@ class SpeechInNoise extends React.Component {
           <Fab
             color="default"
             onClick={() => this.changeAnswer("4")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             4
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("5")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             5
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("6")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             6
           </Fab>
@@ -352,21 +352,21 @@ class SpeechInNoise extends React.Component {
           <Fab
             color="default"
             onClick={() => this.changeAnswer("7")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             7
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("8")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             8
           </Fab>
           <Fab
             color="default"
             onClick={() => this.changeAnswer("9")}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             9
           </Fab>
@@ -375,20 +375,14 @@ class SpeechInNoise extends React.Component {
           <Fab
             color="default"
             onClick={this.handleDelete}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             <BackspaceIcon />
           </Fab>
           <Fab
             color="default"
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
-          >
-            0
-          </Fab>
-          <Fab
-            color="default"
             onClick={this.checkAnswer}
-            style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+            style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             OK
           </Fab>
@@ -398,32 +392,42 @@ class SpeechInNoise extends React.Component {
   };
 
   render() {
-    const { step, loading, countDown } = this.state;
+    const { step, loading } = this.state;
     return (
       <Container style={{ textAlign: "center" }}>
-        <div
-          style={{
-            textAlign: "center",
-            position: "relative",
-            marginTop: "20%",
-          }}
-        >
-          {loading ? (
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          7
+        </h2>
+
+        {loading ? (
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+              marginTop: "10%",
+            }}
+          >
             <CountDown />
-          ) : (
-            <div>
-              <h1 className="font-weight-light">
-                Enter the three digits you heard. If you’re not sure, that’s
-                fine. Just guess.
-              </h1>
-              {this.renderInputs()}
-              <h2 className="font-weight-lighter" style={{ marginTop: 10 }}>
-                Step {step} of {this.numOfQues}
-              </h2>
-              {this.renderKeys()}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+              marginTop: "2%",
+            }}
+          >
+            <h2 className="font-weight-light">
+              Enter the three digits you heard. If you’re not sure, that’s fine.
+              Just guess.
+            </h2>
+            {this.renderInputs()}
+            <h2 className="font-weight-lighter" style={{ marginTop: 10 }}>
+              Step {step} of {this.numOfQues}
+            </h2>
+            {this.renderKeys()}
+          </div>
+        )}
       </Container>
     );
   }

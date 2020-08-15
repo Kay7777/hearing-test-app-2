@@ -4,11 +4,14 @@ import { Container, Button } from "@material-ui/core";
 export default (props) => {
   return (
     <Container>
+      <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+        4
+      </h2>
       <div
         style={{
           textAlign: "center",
           position: "relative",
-          marginTop: "20%",
+          marginTop: "15%",
         }}
       >
         <h2>

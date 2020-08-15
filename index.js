@@ -17,40 +17,16 @@ const Data = require("./models/data");
 
 app.post("/api/data", async (req, res) => {
   console.log(req.body);
-  let data;
-  const {
-    SNR1,
-    SNR2,
-    timer1,
-    timer2,
+  const { SNR, timer, id, result, volume, version } = req.body;
+  const data = await new Data({
     id,
-    round,
-    result,
-    volume,
     version,
-  } = req.body;
-  if (round === 1) {
-    data = await new Data({
-      id,
-      version,
-      volume,
-      result,
-      SNR1,
-      timer1,
-      date1: new Date().toLocaleString("en-US", { timeZone: "America/Denver" }),
-    }).save();
-  } else {
-    data = await Data.findOneAndUpdate(
-      { id },
-      {
-        SNR2,
-        timer2,
-        date2: new Date().toLocaleString("en-US", {
-          timeZone: "America/Denver",
-        }),
-      }
-    );
-  }
+    volume,
+    result,
+    SNR,
+    timer,
+    date: new Date().toLocaleString("en-US", { timeZone: "America/Denver" }),
+  }).save();
   res.status(201).send(data);
 });
 

@@ -16,7 +16,7 @@ class Id extends React.Component {
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "23%",
           }}
         >
           <h2>Please enter the Study ID # you see at the top of the screen</h2>

@@ -10,38 +10,28 @@ class PostTest extends React.Component {
     super(props);
     this.state = {
       process: "result",
+      result: ["pass", "fail"][Math.floor(Math.random() * 2)],
     };
   }
 
   componentDidMount = () => {};
 
   saveData = async () => {
-    console.log("Data saved from frontend", this.state);
-    const { SNR, result, timer, round, volume, version, id } = this.props;
-    if (round === 1) {
-      await axios.post("/api/data", {
-        id,
-        version,
-        SNR1: SNR,
-        result,
-        volume,
-        timer1: timer,
-        round,
-      });
-    } else {
-      await axios.post("/api/data", {
-        id,
-        SNR2: SNR,
-        timer2: timer,
-        round,
-      });
-    }
+    const { result } = this.state;
+    const { SNR, timer, volume, version, id } = this.props;
+    // await axios.post("/api/data", {
+    //   id,
+    //   version,
+    //   SNR,
+    //   result,
+    //   volume,
+    //   timer,
+    // });
     this.setState({ process: "end" });
   };
 
   renderProcess = () => {
     const { process } = this.state;
-    const { round, result } = this.props;
     switch (process) {
       case "result":
         return (
@@ -54,11 +44,11 @@ class PostTest extends React.Component {
       case "post-test-questions":
         return (
           <PostTestQuestions
-            handleClick={this.setState({ process: "submit" })}
+            handleClick={() => this.setState({ process: "submit" })}
           />
         );
       case "submit":
-        return <Submit handleClick={this.saveData} round={round} />;
+        return <Submit handleClick={this.saveData} />;
       case "end":
         return <End />;
       default:

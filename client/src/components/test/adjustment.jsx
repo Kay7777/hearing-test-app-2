@@ -10,7 +10,6 @@ class VolumeAdjustment extends React.Component {
       audio: new Audio(process.env.PUBLIC_URL + "/audios/adjust.wav"),
       audioPlay: false,
       audioVolume: 0.1,
-      done: false,
     };
   }
   componentDidMount = () => {
@@ -65,101 +64,70 @@ class VolumeAdjustment extends React.Component {
     this.setState({ audioPlay: false });
   };
 
-  handleNext = async () => {
-    await this.handleStop();
-    this.setState({ done: true });
-  };
-
   handleVolume = (volume) => {
     this.setState({ audioVolume: volume / 100 });
     this.props.handleVolume(volume);
   };
 
-  askAudioOutput = () => {
+  render() {
     const { audioPlay } = this.state;
     return (
-      <div>
-        <Container>
-          <h2 className="font-weight-light">
-            Set your device's volume to the 50%. Click PLAY to listen to an
-            audio sample.
-          </h2>
-          <h2 className="font-weight-light">
-            Then, move the slider below to a comfortable listening level. After
-            that, click NEXT to begin the test.
-          </h2>
-        </Container>
-        <VolumeSlider
-          handleVolume={this.handleVolume}
-          style={{ marginLeft: "30%" }}
-        />
-        {audioPlay ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleStop}
-            style={{ margin: 5, width: 150, backgroundColor: "black" }}
-          >
-            Stop
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handlePlay}
-            style={{
-              margin: 5,
-              width: 150,
-              backgroundColor: "black",
-            }}
-          >
-            Play
-          </Button>
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ margin: 5, width: 150, backgroundColor: "black" }}
-          onClick={this.handleNext}
-        >
-          Next
-        </Button>
-      </div>
-    );
-  };
-
-  readyToStart = () => {
-    return (
-      <div>
-        <h2 className="font-weight-light">
-          The test is about to begin. Please WAIT until the clip has finished
-          playing before typing the numbers you hear. You can't change your
-          response once you've entered it.
-        </h2>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ margin: 5, width: 150, backgroundColor: "black" }}
-          onClick={this.props.handleClick}
-        >
-          OK
-        </Button>
-      </div>
-    );
-  };
-
-  render() {
-    const { done } = this.state;
-    return (
       <Container>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          5
+        </h2>
         <div
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "10%",
           }}
         >
-          {done ? this.readyToStart() : this.askAudioOutput()}
+          <Container>
+            <h2 className="font-weight-light">
+              Set your device's volume to the 50%. Click PLAY to listen to an
+              audio sample.
+            </h2>
+            <h2 className="font-weight-light">
+              Then, move the slider below to a comfortable listening level.
+              After that, click NEXT to begin the test.
+            </h2>
+          </Container>
+          <VolumeSlider
+            handleVolume={this.handleVolume}
+            style={{ marginLeft: "30%" }}
+          />
+          {audioPlay ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleStop}
+              style={{ margin: 5, width: 150, backgroundColor: "black" }}
+            >
+              Stop
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handlePlay}
+              style={{
+                margin: 5,
+                width: 150,
+                backgroundColor: "black",
+              }}
+            >
+              Play
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ margin: 5, width: 150, backgroundColor: "black" }}
+            onClick={this.props.handleClick}
+          >
+            Next
+          </Button>
         </div>
       </Container>
     );

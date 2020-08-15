@@ -20,11 +20,14 @@ class Birth extends React.Component {
   render() {
     return (
       <Container>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          2
+        </h2>
         <div
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "15%",
           }}
         >
           <h1>Select your year of birth:</h1>

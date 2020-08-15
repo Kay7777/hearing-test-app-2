@@ -218,7 +218,11 @@ class TestDemo extends React.Component {
             maxLength: 1,
           }}
           required={true}
-          style={{ width: 30, marginRight: 30 }}
+          style={{
+            width: 40,
+            marginRight: 10,
+            paddingLeft: 13,
+          }}
         />
         <Input
           value={input2}
@@ -229,7 +233,7 @@ class TestDemo extends React.Component {
             maxLength: 1,
           }}
           required={true}
-          style={{ width: 30 }}
+          style={{ width: 40, paddingLeft: 13 }}
         />
         <Input
           value={input3}
@@ -240,7 +244,7 @@ class TestDemo extends React.Component {
             maxLength: 1,
           }}
           required={true}
-          style={{ width: 30, marginLeft: 30 }}
+          style={{ width: 40, marginLeft: 10, paddingLeft: 13 }}
         />
       </div>
     );
@@ -254,19 +258,19 @@ class TestDemo extends React.Component {
           <div className="rows">
             <Fab
               color={click === 1 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10 }}
+              style={{ marginLeft: 6, marginRight: 6 }}
             >
               1
             </Fab>
             <Fab
               color={click === 2 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10 }}
+              style={{ marginLeft: 6, marginRight: 6 }}
             >
               2
             </Fab>
             <Fab
               color={click === 3 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10 }}
+              style={{ marginLeft: 6, marginRight: 6 }}
             >
               3
             </Fab>
@@ -274,19 +278,19 @@ class TestDemo extends React.Component {
           <div className="rows">
             <Fab
               color={click === 4 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               4
             </Fab>
             <Fab
               color={click === 5 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               5
             </Fab>
             <Fab
               color={click === 6 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               6
             </Fab>
@@ -294,19 +298,19 @@ class TestDemo extends React.Component {
           <div className="rows">
             <Fab
               color={click === 7 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               7
             </Fab>
             <Fab
               color={click === 8 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               8
             </Fab>
             <Fab
               color={click === 9 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               9
             </Fab>
@@ -314,19 +318,13 @@ class TestDemo extends React.Component {
           <div className="rows">
             <Fab
               color={click === "x" ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               <BackspaceIcon />
             </Fab>
             <Fab
-              color={click === 0 ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
-            >
-              0
-            </Fab>
-            <Fab
               color={click === "ok" ? "primary" : "default"}
-              style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}
+              style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
             >
               OK
             </Fab>
@@ -345,11 +343,14 @@ class TestDemo extends React.Component {
     const { stage } = this.state;
     return (
       <Container style={{ textAlign: "center" }}>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          6
+        </h2>
         <div
           style={{
             textAlign: "center",
             position: "relative",
-            marginTop: "20%",
+            marginTop: "2%",
           }}
         >
           {stage === 0 ? (
@@ -359,10 +360,10 @@ class TestDemo extends React.Component {
             </div>
           ) : (
             <div>
-              <h1 className="font-weight-light">
+              <h2 className="font-weight-light">
                 Enter the three digits you heard. If you’re not sure, that’s
                 fine. Just guess.
-              </h1>
+              </h2>
               {this.renderInputs()}
               <br />
               {this.renderKeys()}
@@ -374,7 +375,6 @@ class TestDemo extends React.Component {
                 onClick={this.handleNext}
                 style={{
                   backgroundColor: "black",
-                  marginTop: 10,
                   width: 100,
                 }}
               >
