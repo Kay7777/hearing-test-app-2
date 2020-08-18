@@ -12,7 +12,7 @@ class Start extends React.Component {
       process: "welcome",
       consent: {},
       email: "",
-      value: 50,
+      hearing: {},
     };
   }
 
@@ -30,8 +30,8 @@ class Start extends React.Component {
     this.setState({ birth, process: "hearing" });
   };
 
-  handleHearClick = async (value) => {
-    await this.setState({ value });
+  handleHearClick = async (hearing) => {
+    await this.setState({ hearing });
     this.props.handleNext();
   };
 
