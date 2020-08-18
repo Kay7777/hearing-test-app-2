@@ -69,6 +69,11 @@ class VolumeAdjustment extends React.Component {
     this.props.handleVolume(volume);
   };
 
+  handleNext = () => {
+    this.state.audio.pause();
+    this.props.handleClick();
+  };
+
   render() {
     const { audioPlay } = this.state;
     return (
@@ -124,7 +129,7 @@ class VolumeAdjustment extends React.Component {
             variant="contained"
             color="primary"
             style={{ margin: 5, width: 150, backgroundColor: "black" }}
-            onClick={this.props.handleClick}
+            onClick={this.handleNext}
           >
             Next
           </Button>

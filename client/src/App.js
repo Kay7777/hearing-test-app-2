@@ -1,60 +1,25 @@
 import React from "react";
-import Start from "./pages/start";
-import Test from "./pages/test";
-import PostTest from "./pages/post-test.jsx";
+import Main from "./pages/main";
+import Page1Question from "./pages/page1-question";
+import Page3Question from "./pages/page3-question";
+import UserData from "./pages/user-data";
+import { Route, BrowserRouter } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      process: "start",
-      id: null,
-      version: null,
-      volume: null,
-      SNR: null,
-      timer: null,
-    };
+    this.state = {};
   }
 
-  handleStartNext = () => {
-    this.setState({ process: "test" });
-  };
-
-  handleTestNext = (id, version, volume, SNR, timer) => {
-    this.setState({
-      process: "post-test",
-      id,
-      version,
-      volume,
-      SNR,
-      timer,
-    });
-  };
-
-  renderProcess = () => {
-    const { process, id, version, volume, SNR, timer } = this.state;
-    switch (process) {
-      case "start":
-        return <Start handleNext={this.handleStartNext} />;
-      case "test":
-        return <Test handleNext={this.handleTestNext} />;
-      case "post-test":
-        return (
-          <PostTest
-            id={id}
-            version={version}
-            volume={volume}
-            SNR={SNR}
-            timer={timer}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   render() {
-    return this.renderProcess();
+    return (
+      <BrowserRouter>
+        <Route exact path="/" component={Main} />
+        <Route exact path="/q1" component={Page1Question} />
+        <Route exact path="/q3" component={Page3Question} />
+        <Route exact path="/data" component={UserData} />
+      </BrowserRouter>
+    );
   }
 }
 export default App;

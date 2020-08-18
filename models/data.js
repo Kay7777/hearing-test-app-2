@@ -2,17 +2,16 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const dataSchema = new Schema({
-  id: String,
-  version: Number,
+  email: String,
+  location: Object,
+  consents: Object,
+  hearing: Object,
+  birth: Number,
   result: String,
   volume: Number,
-  SNR1: Number,
-  timer1: [Number],
-  date1: String,
-  SNR2: Number,
-  timer2: [Number],
-  result2: String,
-  date2: String,
+  SNR: Number,
+  timer: [Number],
+  date: String,
 });
 
-module.exports = mongoose.model("datas", dataSchema);
+module.exports = mongoose.model("user_datas", dataSchema);

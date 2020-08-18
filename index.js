@@ -13,37 +13,11 @@ mongoose
     useNewUrlParser: true,
   })
   .catch((err) => console.log(err));
-const Data = require("./models/data");
 
-app.post("/api/data", async (req, res) => {
-  console.log(req.body);
-  const { SNR, timer, id, result, volume, version } = req.body;
-  const data = await new Data({
-    id,
-    version,
-    volume,
-    result,
-    SNR,
-    timer,
-    date: new Date().toLocaleString("en-US", { timeZone: "America/Denver" }),
-  }).save();
-  res.status(201).send(data);
-});
-
-app.get("/api/data", async (req, res) => {
-  const data = await Data.find();
-  res.status(200).send(data);
-});
-
-app.get("/api/data/:id", async (req, res) => {
-  const data = await Data.findOne({ id: req.params.id });
-  res.send(data);
-});
-
-app.delete("/api/data/:id", async (req, res) => {
-  await Data.findByIdAndDelete(req.params.id);
-  res.send({});
-});
+const UserDataRouter = require("./routes/user-data");
+const QuestionRouter = require("./routes/questions");
+app.use(UserDataRouter);
+app.use(QuestionRouter);
 
 if (["production", "ci"].includes(process.env.NODE_ENV)) {
   app.use(express.static("client/build"));

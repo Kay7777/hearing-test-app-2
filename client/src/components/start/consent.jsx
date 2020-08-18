@@ -8,24 +8,23 @@ import {
   FormControlLabel,
   FormControl,
 } from "@material-ui/core";
+import axios from "axios";
 
 class Consent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [
-        "Do you understand that you have been asked to participate in a research study?",
-        "Have you read the information at the top of the page?",
-        "Do you understand the benefits and risks involved in taking part in this research study?",
-        "Do you understand that you are invited to contact the researchers (csdhear@ualberta.ca) if you have questions about the study?",
-        "Do you understand that you are free to withdraw from this study at any time (by closing your browser window), without having to give a reason?",
-        "Do you understand that the personal information you provide by participating in this study will be kept confidential and will not be accessed or used by anyone outside this study?",
-        "I agree to take part in this study",
-      ],
+      questions: [],
       consents: {},
       email: "",
     };
   }
+
+  componentDidMount = async () => {
+    const doc = await axios.get("/api/page1/questions");
+    const questions = doc.data.map((data) => data.question);
+    this.setState({ questions });
+  };
 
   handleConsent = (index, value) => {
     const { consents, questions } = this.state;
