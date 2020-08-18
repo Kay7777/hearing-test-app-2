@@ -10,7 +10,8 @@ class Start extends React.Component {
     super(props);
     this.state = {
       process: "welcome",
-      consent: undefined,
+      consent: {},
+      email: "",
       value: 50,
     };
   }
@@ -21,12 +22,8 @@ class Start extends React.Component {
     }, 3000);
   };
 
-  handleConsentClick = (res) => {
-    if (res === "yes") {
-      this.setState({ process: "birth", consent: res });
-    } else {
-      this.setState({ process: "thanks", consent: res });
-    }
+  handleConsentClick = (email, consents) => {
+    this.setState({ email, consents, process: "birth" });
   };
 
   handleBirthClick = (birth) => {
@@ -45,8 +42,6 @@ class Start extends React.Component {
         return <Welcome />;
       case "consent":
         return <Consent handleClick={this.handleConsentClick} />;
-      case "thanks":
-        return <Thanks />;
       case "birth":
         return <Birth handleClick={this.handleBirthClick} />;
       case "hearing":

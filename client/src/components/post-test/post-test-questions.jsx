@@ -33,7 +33,7 @@ class PostTestQuestions extends React.Component {
               Strongly disagree
             </h5>
             <Slider
-              valueLabelDisplay="auto"
+              valueLabelDisplay="on"
               defaultValue={this.state.value}
               onChange={(e) => {
                 e.target.addEventListener("click", (v) => {
