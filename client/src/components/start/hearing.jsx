@@ -17,6 +17,43 @@ class Hearing extends React.Component {
     this.setState({ questions });
   };
 
+  validateHearing = () => {
+    const { questions, hearing } = this.state;
+    if (Object.keys(hearing).length !== questions.length) return false;
+    for (const key in hearing) {
+      if (Object.keys(hearing[key]).length !== 2) return false;
+    }
+    return true;
+  };
+
+  renderButton = () => {
+    const { questions, hearing } = this.state;
+    // console.log(Object.keys(hearing).length, questions.length);
+    if (questions.length === 0) {
+      return null;
+    }
+    // else if (this.validateHearing()) {
+    return (
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        onClick={() => this.props.handleClick(hearing)}
+        style={{
+          backgroundColor: "black",
+          width: 200,
+          marginBottom: 10,
+        }}
+        disabled={this.state.value === null}
+      >
+        OK
+      </Button>
+    );
+    // } else {
+    //   return <h3>Please answer all questions.</h3>;
+    // }
+  };
+
   render() {
     const { hearing, questions } = this.state;
     return (
@@ -70,7 +107,7 @@ class Hearing extends React.Component {
                   How confident are you that you can manage this situation?
                 </h5>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h6>Not confident at all</h6>
+                  <h6>Not confident</h6>
                   <Slider
                     valueLabelDisplay="auto"
                     defaultValue={50}
@@ -101,22 +138,7 @@ class Hearing extends React.Component {
             );
           })}
           <br />
-          {questions.length === 0 ? null : (
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              onClick={() => this.props.handleClick(hearing)}
-              style={{
-                backgroundColor: "black",
-                width: 200,
-                marginBottom: 10,
-              }}
-              disabled={this.state.value === null}
-            >
-              OK
-            </Button>
-          )}
+          {this.renderButton()}
         </div>
       </Container>
     );

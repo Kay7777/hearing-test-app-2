@@ -40,8 +40,8 @@ class Main extends React.Component {
     }, 3000);
   };
 
-  handleConsentClick = (email, consents) => {
-    this.setState({ email, consents, process: "birth" });
+  handleConsentClick = (email) => {
+    this.setState({ email, process: "birth" });
   };
 
   handleBirthClick = (birth) => {

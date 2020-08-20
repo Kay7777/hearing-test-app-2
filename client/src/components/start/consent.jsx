@@ -5,8 +5,10 @@ import {
   TextField,
   Radio,
   RadioGroup,
+  FormGroup,
   FormControlLabel,
   FormControl,
+  Checkbox,
 } from "@material-ui/core";
 import axios from "axios";
 
@@ -16,6 +18,7 @@ class Consent extends React.Component {
     this.state = {
       questions: [],
       consents: {},
+      agreement: "false",
       email: "",
     };
   }
@@ -30,6 +33,49 @@ class Consent extends React.Component {
     const { consents, questions } = this.state;
     consents[questions[index]] = value;
     this.setState({ consents });
+  };
+
+  validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  validateConsents = () => {
+    const { consents, questions } = this.state;
+    if (Object.keys(consents).length !== questions.length) {
+      return false;
+    }
+    for (const key in consents) {
+      if (!consents[key]) return false;
+    }
+    return true;
+  };
+
+  renderButton = () => {
+    const { email, agreement } = this.state;
+    // if (
+    //   this.validateConsents() &&
+    //   this.validateEmail(email) &&
+    //   agreement === "true"
+    // ) {
+    return (
+      <Button
+        color="primary"
+        variant="contained"
+        style={{
+          backgroundColor: "black",
+          width: "15%",
+          marginTop: 10,
+          marginLeft: 10,
+        }}
+        onClick={() => this.props.handleClick(email)}
+      >
+        Next
+      </Button>
+    );
+    // } else {
+    //   return <h4>Please provide enough information!</h4>;
+    // }
   };
 
   render() {
@@ -153,28 +199,44 @@ class Consent extends React.Component {
             return (
               <FormControl component="fieldset" style={{ marginBottom: 10 }}>
                 <h4 component="legend">{question}</h4>
-                <RadioGroup
-                  row
-                  aria-label="position"
-                  name="position"
-                  defaultValue="top"
-                  onChange={(e) => this.handleConsent(index, e.target.value)}
-                >
+                <FormGroup>
                   <FormControlLabel
-                    value="yes"
-                    control={<Radio color="primary" />}
-                    label="Yes"
+                    control={
+                      <Checkbox
+                        checked={!!consents[question]}
+                        color="primary"
+                        onChange={(e) =>
+                          this.handleConsent(index, e.target.checked)
+                        }
+                      />
+                    }
+                    label="Confirm"
                   />
-                  <FormControlLabel
-                    value="no"
-                    control={<Radio color="primary" />}
-                    label="No"
-                  />
-                </RadioGroup>
+                </FormGroup>
               </FormControl>
             );
           })}
-
+          <FormControl component="fieldset" style={{ marginBottom: 10 }}>
+            <h4 component="legend">I agree to take part in this study.</h4>
+            <RadioGroup
+              row
+              aria-label="position"
+              name="position"
+              defaultValue="top"
+              onChange={(e) => this.setState({ agreement: e.target.value })}
+            >
+              <FormControlLabel
+                value="true"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="false"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
           <h4>
             Please enter your email address to continue. This will allow us to
             keep track of our study responses.
@@ -183,21 +245,11 @@ class Consent extends React.Component {
             label="email"
             value={email}
             onChange={(e) => this.setState({ email: e.target.value })}
-            style={{ width: 200 }}
+            style={{ width: 250 }}
           />
-          <Button
-            color="primary"
-            variant="contained"
-            style={{
-              backgroundColor: "black",
-              width: "15%",
-              marginTop: 10,
-              marginLeft: 10,
-            }}
-            onClick={() => this.props.handleClick(email, consents)}
-          >
-            Next
-          </Button>
+          <br />
+          <br />
+          {this.renderButton()}
           <br />
           <br />
           <hr />

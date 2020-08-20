@@ -1,24 +1,29 @@
 import React from "react";
 import { Container, Button } from "@material-ui/core";
+import CountDown from "../../assets/count-down";
 
 class ResultVideo extends React.Component {
   constructor(props) {
     super();
     this.state = {
       showButton: false,
-      showResult: false,
+      process: "show-result-button",
     };
   }
-  componentDidMount = () => {
-    setTimeout(() => this.setState({ showButton: true }), 9000);
+
+  handleGetResult = () => {
+    this.setState({ process: "count-down" });
+    setTimeout(() => {
+      this.setState({ process: "result-video" });
+    }, 3000);
+    setTimeout(() => this.setState({ showButton: true }), 52000);
   };
-  render() {
-    return (
-      <Container style={{ textAlign: "center" }}>
-        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
-          {!this.state.showResult ? 8 : 9}
-        </h2>
-        {!this.state.showResult ? (
+
+  renderResult = () => {
+    const { process } = this.state;
+    switch (process) {
+      case "show-result-button":
+        return (
           <div
             style={{
               textAlign: "center",
@@ -34,7 +39,7 @@ class ResultVideo extends React.Component {
               color="primary"
               variant="contained"
               size="large"
-              onClick={() => this.setState({ showResult: true })}
+              onClick={this.handleGetResult}
               style={{
                 backgroundColor: "black",
                 width: 150,
@@ -44,7 +49,33 @@ class ResultVideo extends React.Component {
               Get Results
             </Button>
           </div>
-        ) : (
+        );
+      case "count-down":
+        return (
+          <div
+            style={{
+              textAlign: "center",
+              position: "relative",
+              marginTop: "10%",
+            }}
+          >
+            <CountDown />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  render() {
+    const { process } = this.state;
+    return (
+      <Container style={{ textAlign: "center" }}>
+        <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
+          {!this.state.showResult ? 8 : 9}
+        </h2>
+        {this.renderResult()}
+        {process === "result-video" ? (
           <div
             style={{
               textAlign: "center",
@@ -53,20 +84,19 @@ class ResultVideo extends React.Component {
             }}
           >
             <h3>
-              Your test performance indicates that you may have{" "}
+              Your test performance indicates that you may have
               <span className="text-danger">hearing loss</span>. Please view the
               short clip below for more information on what this means.
             </h3>
             <br />
-            <iframe
-              width="1566"
-              height="758"
-              src="https://www.youtube.com/embed/NpEaa2P7qZI"
-              frameborder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              style={{ width: "80%", height: 300 }}
-            ></iframe>
+            <video
+              width="80%"
+              autoPlay={true}
+              controls={false}
+              src={process.env.PUBLIC_URL + "/videos/result-video.mp4"}
+            >
+              <h3>This browser does not support the video element.</h3>
+            </video>
             <br />
             {this.state.showButton ? (
               <Button
@@ -76,7 +106,8 @@ class ResultVideo extends React.Component {
                 onClick={this.props.handleClick}
                 style={{
                   backgroundColor: "black",
-                  width: 150,
+                  width: 200,
+                  height: 50,
                   marginTop: 10,
                 }}
               >
@@ -84,7 +115,7 @@ class ResultVideo extends React.Component {
               </Button>
             ) : null}
           </div>
-        )}
+        ) : null}
       </Container>
     );
   }

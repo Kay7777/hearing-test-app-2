@@ -21,6 +21,7 @@ class SpeechInNoise extends React.Component {
       timer: [],
       dbs: [0],
       countDown: 3,
+      okButton: false,
     };
     this.input1 = React.createRef();
     this.input2 = React.createRef();
@@ -108,6 +109,7 @@ class SpeechInNoise extends React.Component {
     }
     setTimeout(() => {
       noise.volume = noiseVolume;
+      this.startTimer();
       noise.play();
     }, 100);
     setTimeout(() => {
@@ -127,7 +129,6 @@ class SpeechInNoise extends React.Component {
     }, 2900);
     setTimeout(() => {
       noise.pause();
-      this.startTimer();
     }, 4100);
   };
 
@@ -181,18 +182,18 @@ class SpeechInNoise extends React.Component {
     if (step <= 4) {
       dbs.push(dbs[step - 1] + 4);
       this.setState({ dbs });
-      if (audioVolume * 10 ** (4 / this.numOfQues) > 1) {
+      if (audioVolume * 10 ** (4 / 20) > 1) {
         return 1;
       } else {
-        return audioVolume * 10 ** (4 / this.numOfQues);
+        return audioVolume * 10 ** (4 / 20);
       }
     } else {
       dbs.push(dbs[step - 1] + 2);
       this.setState({ dbs });
-      if (audioVolume * 10 ** (2 / this.numOfQues) > 1) {
+      if (audioVolume * 10 ** (2 / 20) > 1) {
         return 1;
       } else {
-        return audioVolume * 10 ** (2 / this.numOfQues);
+        return audioVolume * 10 ** (2 / 20);
       }
     }
   };
@@ -202,11 +203,11 @@ class SpeechInNoise extends React.Component {
     if (step <= 4) {
       dbs.push(dbs[step - 1] - 4);
       this.setState({ dbs });
-      return audioVolume * 10 ** (-4 / this.numOfQues);
+      return audioVolume * 10 ** (-4 / 20);
     } else {
       dbs.push(dbs[step - 1] - 2);
       this.setState({ dbs });
-      return audioVolume * 10 ** (-2 / this.numOfQues);
+      return audioVolume * 10 ** (-2 / 20);
     }
   };
 
@@ -252,6 +253,13 @@ class SpeechInNoise extends React.Component {
     }
   };
 
+  handleKeyEnter = (e) => {
+    if (this.state.input3 !== "" && e.keyCode === 13) {
+      console.log("KeyBoard Listen: Enter");
+      this.checkAnswer();
+    }
+  };
+
   renderInputs = () => {
     const { input1, input2, input3 } = this.state;
     return (
@@ -292,6 +300,7 @@ class SpeechInNoise extends React.Component {
             maxLength: 1,
           }}
           required={true}
+          onKeyDown={this.handleKeyEnter}
           onChange={(e) => this.changeAnswer(e.target.value)}
           style={{ width: 40, marginLeft: 10, paddingLeft: 13 }}
         />
@@ -382,6 +391,7 @@ class SpeechInNoise extends React.Component {
           <Fab
             color="default"
             onClick={this.checkAnswer}
+            disabled={this.renderOKButton()}
             style={{ marginLeft: 6, marginRight: 6, marginTop: 10 }}
           >
             OK
@@ -389,6 +399,12 @@ class SpeechInNoise extends React.Component {
         </div>
       </div>
     );
+  };
+
+  renderOKButton = () => {
+    const { input1, input2, input3 } = this.state;
+    if (!!input1 && !!input2 && !!input3) return false;
+    return true;
   };
 
   render() {
