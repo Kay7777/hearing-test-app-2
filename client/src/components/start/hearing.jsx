@@ -31,27 +31,26 @@ class Hearing extends React.Component {
     // console.log(Object.keys(hearing).length, questions.length);
     if (questions.length === 0) {
       return null;
+    } else if (this.validateHearing()) {
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          onClick={() => this.props.handleClick(hearing)}
+          style={{
+            backgroundColor: "black",
+            width: 200,
+            marginBottom: 10,
+          }}
+          disabled={this.state.value === null}
+        >
+          OK
+        </Button>
+      );
+    } else {
+      return <h3>Please answer all questions.</h3>;
     }
-    // else if (this.validateHearing()) {
-    return (
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        onClick={() => this.props.handleClick(hearing)}
-        style={{
-          backgroundColor: "black",
-          width: 200,
-          marginBottom: 10,
-        }}
-        disabled={this.state.value === null}
-      >
-        OK
-      </Button>
-    );
-    // } else {
-    //   return <h3>Please answer all questions.</h3>;
-    // }
   };
 
   render() {

@@ -53,29 +53,29 @@ class Consent extends React.Component {
 
   renderButton = () => {
     const { email, agreement } = this.state;
-    // if (
-    //   this.validateConsents() &&
-    //   this.validateEmail(email) &&
-    //   agreement === "true"
-    // ) {
-    return (
-      <Button
-        color="primary"
-        variant="contained"
-        style={{
-          backgroundColor: "black",
-          width: "15%",
-          marginTop: 10,
-          marginLeft: 10,
-        }}
-        onClick={() => this.props.handleClick(email)}
-      >
-        Next
-      </Button>
-    );
-    // } else {
-    //   return <h4>Please provide enough information!</h4>;
-    // }
+    if (
+      this.validateConsents() &&
+      this.validateEmail(email) &&
+      agreement === "true"
+    ) {
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          style={{
+            backgroundColor: "black",
+            width: "15%",
+            marginTop: 10,
+            marginLeft: 10,
+          }}
+          onClick={() => this.props.handleClick(email)}
+        >
+          Next
+        </Button>
+      );
+    } else {
+      return <h4>Please provide enough information!</h4>;
+    }
   };
 
   render() {
