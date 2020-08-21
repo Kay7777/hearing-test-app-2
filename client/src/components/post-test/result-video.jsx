@@ -93,7 +93,7 @@ class ResultVideo extends React.Component {
               width="80%"
               autoPlay={true}
               controls={false}
-              src={process.env.PUBLIC_URL + "/videos/result-video.mp4"}
+              src="https://literacyapp.s3.ca-central-1.amazonaws.com/videos/result-video.mp4"
             >
               <h3>This browser does not support the video element.</h3>
             </video>

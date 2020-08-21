@@ -28,7 +28,7 @@ class Hearing extends React.Component {
 
   renderButton = () => {
     const { questions, hearing } = this.state;
-    // console.log(Object.keys(hearing).length, questions.length);
+    console.log(hearing);
     if (questions.length === 0) {
       return null;
     } else if (this.validateHearing()) {
@@ -76,7 +76,7 @@ class Hearing extends React.Component {
                 <h4>{question}</h4>
                 <h5>How well you hear in this situation?</h5>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h6>Not well at all</h6>
+                  <h6 style={{ marginTop: 10 }}>Not well at all</h6>
                   <Slider
                     valueLabelDisplay="auto"
                     defaultValue={50}
@@ -100,13 +100,19 @@ class Hearing extends React.Component {
                     min={0}
                     max={100}
                   />
-                  <h6>Very well</h6>
+                  <h6 style={{ marginRight: 10, marginTop: 10 }}>Very well</h6>
+                  {hearing[questions[index]] &&
+                  hearing[questions[index]].wellness ? (
+                    <h5>{hearing[questions[index]].wellness}</h5>
+                  ) : (
+                    <h5 className="text-danger">"Not choose yet"</h5>
+                  )}
                 </div>
                 <h5>
                   How confident are you that you can manage this situation?
                 </h5>
                 <div className="row" style={{ marginLeft: 20 }}>
-                  <h6>Not confident</h6>
+                  <h6 style={{ marginTop: 10 }}>Not confident</h6>
                   <Slider
                     valueLabelDisplay="auto"
                     defaultValue={50}
@@ -130,7 +136,15 @@ class Hearing extends React.Component {
                     min={0}
                     max={100}
                   />
-                  <h6>Very confident</h6>
+                  <h6 style={{ marginRight: 10, marginTop: 10 }}>
+                    Very confident
+                  </h6>
+                  {hearing[questions[index]] &&
+                  hearing[questions[index]].confidence ? (
+                    <h5>{hearing[questions[index]].confidence}</h5>
+                  ) : (
+                    <h5 className="text-danger">"Not choose yet"</h5>
+                  )}
                 </div>
                 <hr />
               </div>
