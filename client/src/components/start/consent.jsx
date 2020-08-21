@@ -74,7 +74,20 @@ class Consent extends React.Component {
         </Button>
       );
     } else {
-      return <h4>Please provide enough information!</h4>;
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          style={{
+            width: "15%",
+            marginTop: 10,
+            marginLeft: 10,
+          }}
+          disabled={true}
+        >
+          Next
+        </Button>
+      );
     }
   };
 

@@ -23,10 +23,10 @@ class PostTestQuestions extends React.Component {
             marginTop: "15%",
           }}
         >
-          <h2>
+          <h3>
             I’m going to discuss my results on the hearing test with a
             healthcare professional
-          </h2>
+          </h3>
           <br />
           <div className="row">
             <h5 style={{ marginLeft: "14%", marginRight: 10 }}>

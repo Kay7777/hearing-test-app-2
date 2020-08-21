@@ -89,14 +89,14 @@ class VolumeAdjustment extends React.Component {
           }}
         >
           <Container>
-            <h3>
+            <h4>
               Set your device's volume to the 50%. Click PLAY to listen to an
               audio sample.
-            </h3>
-            <h3>
+            </h4>
+            <h4>
               Then, move the slider below to a comfortable listening level.
               After that, click NEXT to begin the test.
-            </h3>
+            </h4>
           </Container>
           <VolumeSlider
             handleVolume={this.handleVolume}

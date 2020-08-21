@@ -13,9 +13,45 @@ class Birth extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      birth: 2000,
+      birth: null,
     };
   }
+
+  renderButton = () => {
+    const { birth } = this.state;
+    if (birth !== null) {
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          style={{
+            backgroundColor: "black",
+            width: 100,
+            margin: 10,
+          }}
+          onClick={() => this.props.handleClick(this.state.birth)}
+        >
+          ok
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          style={{
+            width: 100,
+            margin: 10,
+          }}
+          disabled={true}
+        >
+          ok
+        </Button>
+      );
+    }
+  };
 
   render() {
     return (
@@ -31,12 +67,13 @@ class Birth extends React.Component {
           }}
         >
           <h1>Select your year of birth:</h1>
-          <FormControl style={{ width: "100" }}>
+          <FormControl>
             <InputLabel id="demo-simple-select-label">Year</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={this.state.birth}
+              style={{ width: 80 }}
               onChange={(e) => this.setState({ birth: e.target.value })}
             >
               <MenuItem value={1920}>1920</MenuItem>
@@ -142,19 +179,7 @@ class Birth extends React.Component {
               <MenuItem value={2020}>2020</MenuItem>
             </Select>
           </FormControl>
-          <Button
-            color="primary"
-            variant="contained"
-            size="large"
-            style={{
-              backgroundColor: "black",
-              width: 100,
-              margin: 10,
-            }}
-            onClick={() => this.props.handleClick(this.state.birth)}
-          >
-            ok
-          </Button>
+          {this.renderButton()}
         </div>
       </Container>
     );

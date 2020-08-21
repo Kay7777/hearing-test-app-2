@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button, Slider } from "@material-ui/core";
 import axios from "axios";
+import ScoreSlider from "../../assets/score-slider";
 
 class Hearing extends React.Component {
   constructor(props) {
@@ -26,6 +27,36 @@ class Hearing extends React.Component {
     return true;
   };
 
+  handleWellness = (index, value) => {
+    const { hearing, questions } = this.state;
+    this.setState(() => {
+      if (hearing[questions[index]]) {
+        const obj = hearing[questions[index]];
+        obj["wellness"] = value;
+      } else {
+        hearing[questions[index]] = {
+          wellness: value,
+        };
+      }
+      return { hearing };
+    });
+  };
+
+  handleConfidence = (index, value) => {
+    const { hearing, questions } = this.state;
+    this.setState(() => {
+      if (hearing[questions[index]]) {
+        const obj = hearing[questions[index]];
+        obj["confidence"] = value;
+      } else {
+        hearing[questions[index]] = {
+          confidence: value,
+        };
+      }
+      return { hearing };
+    });
+  };
+
   renderButton = () => {
     const { questions, hearing } = this.state;
     console.log(hearing);
@@ -43,18 +74,32 @@ class Hearing extends React.Component {
             width: 200,
             marginBottom: 10,
           }}
-          disabled={this.state.value === null}
         >
           OK
         </Button>
       );
     } else {
-      return <h3>Please answer all questions.</h3>;
+      return (
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          onClick={() => this.props.handleClick(hearing)}
+          style={{
+            width: 200,
+            marginBottom: 10,
+          }}
+          disabled={true}
+        >
+          OK
+        </Button>
+      );
     }
   };
 
   render() {
     const { hearing, questions } = this.state;
+    console.log(hearing);
     return (
       <Container>
         <h2 style={{ textAlign: "right", marginTop: "5%", marginRight: "5%" }}>
@@ -75,77 +120,41 @@ class Hearing extends React.Component {
               <div style={{ marginTop: 10 }}>
                 <h4>{question}</h4>
                 <h5>How well you hear in this situation?</h5>
-                <div className="row" style={{ marginLeft: 20 }}>
-                  <h6 style={{ marginTop: 10 }}>Not well at all</h6>
-                  <Slider
-                    valueLabelDisplay="auto"
-                    defaultValue={50}
-                    aria-labelledby="discrete-slider-always"
-                    onChange={(e) => {
-                      e.target.addEventListener("click", (v) => {
-                        this.setState(() => {
-                          if (hearing[questions[index]]) {
-                            const obj = hearing[questions[index]];
-                            obj["wellness"] = v.target.innerText;
-                          } else {
-                            hearing[questions[index]] = {
-                              wellness: v.target.innerText,
-                            };
-                          }
-                          return { hearing };
-                        });
-                      });
-                    }}
-                    style={{ width: "40%", margin: 10 }}
-                    min={0}
-                    max={100}
-                  />
-                  <h6 style={{ marginRight: 10, marginTop: 10 }}>Very well</h6>
-                  {hearing[questions[index]] &&
-                  hearing[questions[index]].wellness ? (
-                    <h5>{hearing[questions[index]].wellness}</h5>
-                  ) : (
-                    <h5 className="text-danger">"Not choose yet"</h5>
-                  )}
+                {hearing[questions[index]] &&
+                hearing[questions[index]].wellness ? null : (
+                  <h6 className="text-danger">* must provide value</h6>
+                )}
+                <div className="row">
+                  <h6 style={{ marginTop: 10, marginLeft: 15 }}>
+                    Not well at all
+                  </h6>
+                  <h6 style={{ marginTop: 10, marginLeft: "40%" }}>
+                    Very well
+                  </h6>
                 </div>
+                <ScoreSlider
+                  handleScore={(value) => this.handleWellness(index, value)}
+                  style={{ marginLeft: "30%" }}
+                />
                 <h5>
                   How confident are you that you can manage this situation?
                 </h5>
-                <div className="row" style={{ marginLeft: 20 }}>
-                  <h6 style={{ marginTop: 10 }}>Not confident</h6>
-                  <Slider
-                    valueLabelDisplay="auto"
-                    defaultValue={50}
-                    aria-labelledby="discrete-slider-always"
-                    onChange={(e) => {
-                      e.target.addEventListener("click", (v) => {
-                        this.setState(() => {
-                          if (hearing[questions[index]]) {
-                            const obj = hearing[questions[index]];
-                            obj["confidence"] = v.target.innerText;
-                          } else {
-                            hearing[questions[index]] = {
-                              confidence: v.target.innerText,
-                            };
-                          }
-                          return { hearing };
-                        });
-                      });
-                    }}
-                    style={{ width: "40%", margin: 10 }}
-                    min={0}
-                    max={100}
-                  />
-                  <h6 style={{ marginRight: 10, marginTop: 10 }}>
+                {hearing[questions[index]] &&
+                hearing[questions[index]].confidence ? null : (
+                  <h6 className="text-danger">* must provide value</h6>
+                )}
+                <div className="row">
+                  <h6 style={{ marginTop: 10, marginLeft: 15 }}>
+                    Not confident
+                  </h6>
+                  <h6 style={{ marginTop: 10, marginLeft: "38%" }}>
                     Very confident
                   </h6>
-                  {hearing[questions[index]] &&
-                  hearing[questions[index]].confidence ? (
-                    <h5>{hearing[questions[index]].confidence}</h5>
-                  ) : (
-                    <h5 className="text-danger">"Not choose yet"</h5>
-                  )}
                 </div>
+                <ScoreSlider
+                  handleScore={(value) => this.handleConfidence(index, value)}
+                  style={{ marginLeft: "30%" }}
+                />
                 <hr />
               </div>
             );

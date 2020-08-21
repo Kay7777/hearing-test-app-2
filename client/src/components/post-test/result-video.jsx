@@ -31,10 +31,10 @@ class ResultVideo extends React.Component {
               marginTop: "15%",
             }}
           >
-            <h2>
-              You have completed the tests. Click the button below to get your
+            <h3>
+              You have completed the test. Click the button below to get your
               results.
-            </h2>
+            </h3>
             <Button
               color="primary"
               variant="contained"
@@ -42,7 +42,7 @@ class ResultVideo extends React.Component {
               onClick={this.handleGetResult}
               style={{
                 backgroundColor: "black",
-                width: 150,
+                width: 200,
                 marginTop: 10,
               }}
             >
@@ -83,14 +83,17 @@ class ResultVideo extends React.Component {
               marginTop: "2%",
             }}
           >
-            <h3>
-              Your test performance indicates that you may have
-              <span className="text-danger">hearing loss</span>. Please view the
-              short clip below for more information on what this means.
-            </h3>
+            <h4>
+              Your test performance indicates that you may have{" "}
+              <span className="text-danger">hearing loss</span>.
+            </h4>
+            <h4>
+              Please view the short clip below for more information on what this
+              means.
+            </h4>
             <br />
             <video
-              width="80%"
+              width="40%"
               autoPlay={true}
               controls={false}
               src="https://literacyapp.s3.ca-central-1.amazonaws.com/videos/result-video.mp4"
