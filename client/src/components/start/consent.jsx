@@ -24,7 +24,7 @@ class Consent extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/page1/questions");
+    const doc = await axios.get("/api/consent/questions");
     const questions = doc.data.map((data) => data.question);
     this.setState({ questions });
   };

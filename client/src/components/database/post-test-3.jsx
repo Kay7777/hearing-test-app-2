@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import QuestionTable from "../assets/question-table";
+import QuestionTable from "../../assets/question-table";
 import { TextField, Button, Container } from "@material-ui/core";
 
-class Page1Question extends React.Component {
+class Page10Question extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,18 +12,20 @@ class Page1Question extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const doc = await axios.get("/api/page1/questions");
+    const doc = await axios.get("/api/post-test-3/questions");
     this.setState({ questions: doc.data });
   };
 
   handleDelete = async (id) => {
-    await axios.delete("/api/page1/questions/" + id);
+    await axios.delete("/api/post-test-3/questions/" + id);
     await this.setState({ question: "" });
     this.componentDidMount();
   };
 
   handleAdd = async () => {
-    await axios.post("/api/page1/questions", { question: this.state.question });
+    await axios.post("/api/post-test-3/questions", {
+      question: this.state.question,
+    });
     await this.setState({ question: "" });
     this.componentDidMount();
   };
@@ -33,7 +35,15 @@ class Page1Question extends React.Component {
     return (
       <Container>
         <div className="jumbotron">
-          <h1 style={{ margin: 20 }}>Page 1 questions</h1>
+          <h1 style={{ margin: 20 }}>Post-Test Question 3</h1>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginLeft: 20 }}
+            onClick={() => this.props.history.push("/database")}
+          >
+            Back
+          </Button>
         </div>
         <div
           style={{
@@ -46,7 +56,7 @@ class Page1Question extends React.Component {
           <TextField
             label="question"
             value={question}
-            style={{ width: 300 }}
+            style={{ width: "50%" }}
             multiline={true}
             onChange={(e) => this.setState({ question: e.target.value })}
           />
@@ -62,4 +72,4 @@ class Page1Question extends React.Component {
   }
 }
 
-export default Page1Question;
+export default Page10Question;

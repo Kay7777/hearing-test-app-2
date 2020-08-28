@@ -1,8 +1,12 @@
 import React from "react";
 import Main from "./pages/main";
-import Page1Question from "./pages/page1-question";
-import Page3Question from "./pages/page3-question";
-import UserData from "./pages/user-data";
+import Consents from "./components/database/consents";
+import PreTest from "./components/database/pre-test";
+import PostTest1 from "./components/database/post-test-1";
+import PostTest2 from "./components/database/post-test-2";
+import PostTest3 from "./components/database/post-test-3";
+import UserData from "./components/database/user-data";
+import Database from "./pages/database";
 import { Route, BrowserRouter } from "react-router-dom";
 
 class App extends React.Component {
@@ -15,9 +19,13 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Route exact path="/" component={Main} />
-        <Route exact path="/q1" component={Page1Question} />
-        <Route exact path="/q3" component={Page3Question} />
-        <Route exact path="/data" component={UserData} />
+        <Route exact path="/database" component={Database} />
+        <Route exact path="/database/consents" component={Consents} />
+        <Route exact path="/database/pretest" component={PreTest} />
+        <Route exact path="/database/posttest1" component={PostTest1} />
+        <Route exact path="/database/posttest2" component={PostTest2} />
+        <Route exact path="/database/posttest3" component={PostTest3} />
+        <Route exact path="/database/userdata" component={UserData} />
       </BrowserRouter>
     );
   }

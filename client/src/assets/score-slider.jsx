@@ -5,7 +5,7 @@ import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles({
   root: {
-    width: "70%",
+    width: "60%",
     marginLeft: 5,
     // marginRight: 20,
   },

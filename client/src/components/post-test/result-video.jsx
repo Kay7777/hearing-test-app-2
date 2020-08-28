@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Button } from "@material-ui/core";
-import CountDown from "../../assets/count-down";
+import { Container, Button, CircularProgress } from "@material-ui/core";
 
 class ResultVideo extends React.Component {
   constructor(props) {
@@ -15,8 +14,8 @@ class ResultVideo extends React.Component {
     this.setState({ process: "count-down" });
     setTimeout(() => {
       this.setState({ process: "result-video" });
-    }, 3000);
-    setTimeout(() => this.setState({ showButton: true }), 52000);
+    }, 4000);
+    setTimeout(() => this.setState({ showButton: true }), 53000);
   };
 
   renderResult = () => {
@@ -59,7 +58,10 @@ class ResultVideo extends React.Component {
               marginTop: "10%",
             }}
           >
-            <CountDown />
+            <CircularProgress />
+            <br />
+            <br />
+            <h3>Generating the report, please wait ...</h3>
           </div>
         );
       default:

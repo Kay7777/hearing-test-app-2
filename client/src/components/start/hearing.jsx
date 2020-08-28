@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Slider } from "@material-ui/core";
+import { Container, Button } from "@material-ui/core";
 import axios from "axios";
 import ScoreSlider from "../../assets/score-slider";
 
@@ -13,7 +13,7 @@ class Hearing extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/page3/questions");
+    const doc = await axios.get("/api/pre-test/questions");
     const questions = doc.data.map((data) => data.question);
     this.setState({ questions });
   };
@@ -84,7 +84,6 @@ class Hearing extends React.Component {
           color="primary"
           variant="contained"
           size="large"
-          onClick={() => this.props.handleClick(hearing)}
           style={{
             width: 200,
             marginBottom: 10,
@@ -128,7 +127,7 @@ class Hearing extends React.Component {
                   <h6 style={{ marginTop: 10, marginLeft: 15 }}>
                     Not well at all
                   </h6>
-                  <h6 style={{ marginTop: 10, marginLeft: "40%" }}>
+                  <h6 style={{ marginTop: 10, marginLeft: "30%" }}>
                     Very well
                   </h6>
                 </div>
@@ -147,7 +146,7 @@ class Hearing extends React.Component {
                   <h6 style={{ marginTop: 10, marginLeft: 15 }}>
                     Not confident
                   </h6>
-                  <h6 style={{ marginTop: 10, marginLeft: "38%" }}>
+                  <h6 style={{ marginTop: 10, marginLeft: "28%" }}>
                     Very confident
                   </h6>
                 </div>
